@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Конфигурация
-TOKEN = os.getenv("7973967327:AAGQF179Vg6Faw4Vvlqnfq5d3HYjcSnzSvs")
+TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 CRYPTO_SYMBOL = "BTC"
 ALERT_THRESHOLD_PERCENT = 30  # Примерен праг за известие
 
