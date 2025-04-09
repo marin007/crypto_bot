@@ -1,20 +1,20 @@
-import os
 import logging
-import requests
+import os
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 from dotenv import load_dotenv
 
-# Зареждане на .env файла
+# Зареждаме .env файл
 load_dotenv()
 
 # Конфигурация
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 CRYPTO_SYMBOL = "BTC"
-ALERT_THRESHOLD_PERCENT = 30  # Примерен праг за известие
 
 # Логване
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Здравей! Аз съм твоят Crypto Alert Bot 🚀")
@@ -30,7 +30,12 @@ def get_crypto_price(symbol="BTC"):
     return data[symbol.lower()]["usd"]
 
 if __name__ == "__main__":
+    # Старт на новия ApplicationBuilder API
     app = ApplicationBuilder().token(TOKEN).build()
+
+    # Добавяне на командите
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("price", price))
+
+    # Стартиране на бота
     app.run_polling()
